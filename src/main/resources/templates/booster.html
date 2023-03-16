@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy booster</title>
+</head>
+<body>
+
+<h2>Booster of 5 cards:</h2>
+<h2>Cost: 5 Poke Coins</h2>
+
+<h3 th:text="${noPokeCoinsMessage}"></h3>
+<h3 th:text="'Balance: ' + ${pokeCoins}"></h3>
+
+<form action="/buy-booster" method="post">
+    <input type="submit" value="Purchase">
+</form>
+
+<div th:each="card:${cards}">
+    <div th:text="${card.name}"></div>
+    <img width="100" height="150" th:src="${card.largeImage}">
+</div>
+
+<li><a href="/">Back</a></li>
+
+</body>
+</html>

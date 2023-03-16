@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+
+<div th:text="${fieldsNotFilled}"></div>
+<div th:text="${fieldsNotCorrect}"></div>
+
+
+<form action="/registered" method="post">
+
+    <div>
+        <label for="email">Email</label>
+        <input th:field="${registrationRequest.email}" type="email" id="email" placeholder="Email...">
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input th:field="${registrationRequest.password}" type="password" id="password" placeholder="Password...">
+    </div>
+    <div>
+        <label for="passwordRepeated">Repeat password</label>
+        <input th:field="${registrationRequest.passwordRepeated}" type="password" id="passwordRepeated" placeholder="RepeatPassword...">
+    </div>
+    <div>
+        <label for="agree">Agree</label>
+        <input th:field="${registrationRequest.agree}" type="checkbox" id="agree">
+    </div>
+    <div>
+        <input type="submit" value="Register">
+    </div>
+
+</form>
+
+<li><a href="/">Back</a></li>
+
+</body>
+</html>
