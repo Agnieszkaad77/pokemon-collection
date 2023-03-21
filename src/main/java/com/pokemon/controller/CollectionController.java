@@ -2,6 +2,7 @@ package com.pokemon.controller;
 
 import com.pokemon.dto.AuctionDto;
 import com.pokemon.dto.UserDto;
+import com.pokemon.exception.AuctionException;
 import com.pokemon.exception.LoginException;
 import com.pokemon.service.AuctionService;
 import com.pokemon.service.LoginService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @AllArgsConstructor
@@ -32,8 +34,13 @@ public class CollectionController {
     }
 
     @PostMapping("/collection/sell")
-    public String createAuction(AuctionDto auctionDto) {
-        auctionService.saveAuction(auctionDto);
+    public String createAuction(AuctionDto auctionDto, RedirectAttributes redirectAttributes) {
+        try {
+            auctionService.saveAuction(auctionDto);
+        } catch (AuctionException e) {
+            redirectAttributes.addFlashAttribute("auctionMessage", e.getMessage());
+            return "redirect:/collection";
+        }
         return "redirect:/collection";
     }
 }

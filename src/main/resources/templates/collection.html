@@ -7,6 +7,7 @@
 <body>
 
 <h2>My cards collection:</h2>
+<h3 th:text="${auctionMessage}"></h3>
 
 <div th:each="card:${loggedUser.cards}">
     <div th:text="${card.name}"></div>
