@@ -5,7 +5,6 @@ import com.pokemon.entity.CardEntity;
 import com.pokemon.entity.UserEntity;
 import com.pokemon.exception.BoosterException;
 import com.pokemon.mapper.CardMapper;
-import com.pokemon.mapper.UserMapper;
 import com.pokemon.repository.CardRepository;
 import com.pokemon.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,6 @@ public class BoosterService {
     private LoginService loginService;
     private UserRepository userRepository;
     private CardMapper cardMapper;
-    private UserMapper userMapper;
 
     public List<CardDto> buyBooster() {
         if (!verifyBalance()) {

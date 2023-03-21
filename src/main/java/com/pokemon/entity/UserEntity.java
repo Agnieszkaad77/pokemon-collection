@@ -25,13 +25,16 @@ public class UserEntity {
     @Builder.Default
     private int pokeCoins = 20;
     private int points;
-    //usunac points i zrobic metode na ilosc kart (size)
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
     private List<CardEntity> cards = new ArrayList<>();
 
     public void decreasePokeCoins(int price) {
         this.pokeCoins -= price;
+    }
+
+    public void increasePokeCoins(int income) {
+        this.pokeCoins += income;
     }
 
     public void addCards(List<CardEntity> purchasedCards) {
