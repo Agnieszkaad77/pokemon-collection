@@ -1,6 +1,6 @@
 package com.pokemon.client;
 
-import com.pokemon.entity.CardEntity;
+import com.pokemon.entity.CardDataEntity;
 import com.pokemon.repository.CardRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -39,14 +39,14 @@ public class PokemonTcgClient {
         RestTemplate restTemplate = new RestTemplate();
         Cards cards = restTemplate.getForObject(URL + "?page=" + page, Cards.class);
 
-        List<CardEntity> cardEntities = prepareCardEntities(cards);
+        List<CardDataEntity> cardEntities = prepareCardEntities(cards);
 
         cardRepository.saveAll(cardEntities);
     }
 
-    private List<CardEntity> prepareCardEntities(Cards cards) {
-        List<CardEntity> cardEntities = cards.getData().stream()
-                .map(jsonCard -> new CardEntity(jsonCard.getId(), jsonCard.getName(), jsonCard.getImages().getLarge()))
+    private List<CardDataEntity> prepareCardEntities(Cards cards) {
+        List<CardDataEntity> cardEntities = cards.getData().stream()
+                .map(jsonCard -> new CardDataEntity(jsonCard.getId(), jsonCard.getName(), jsonCard.getImages().getLarge()))
                 .toList();
         return cardEntities;
     }

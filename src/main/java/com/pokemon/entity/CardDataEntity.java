@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @ToString
 @Builder
-public class CardEntity {
+public class CardDataEntity {
 
     @Id
     private String id;

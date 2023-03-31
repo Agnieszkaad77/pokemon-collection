@@ -5,6 +5,7 @@ import com.pokemon.entity.UserEntity;
 import com.pokemon.exception.RegistrationException;
 import com.pokemon.mapper.UserMapper;
 import com.pokemon.repository.UserRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,18 @@ public class RegistrationService {
 
     private UserRepository userRepository;
     private UserMapper userMapper;
+
+    @PostConstruct
+    public void addDummyUser() {
+        if (userRepository.count() > 0) {
+            return;
+        }
+        userRepository.save(UserEntity.builder()
+                .email("jan.kowalski@gmail.com")
+                .password("pass")
+                .agree(true)
+                .build());
+    }
 
     public void register(UserRegistrationDto userRegistrationDto) {
         if (checkMandatoryFields(userRegistrationDto)) {

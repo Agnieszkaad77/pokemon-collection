@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserMapper {
 
-    private CardMapper cardMapper;
+    private UserCardMapper userCardMapper;
 
     public UserLoginDto toUserLoginDto(UserEntity userEntity) {
         return UserLoginDto.builder()
@@ -36,7 +36,9 @@ public class UserMapper {
                 .email(userEntity.getEmail())
                 .pokeCoins(userEntity.getPokeCoins())
                 .points(userEntity.getPoints())
-                .cards((userEntity.getCards().stream().map(cardEntity -> cardMapper.toCardDto(cardEntity)).collect(Collectors.toList())))
+                .cards((userEntity.getCards().stream()
+                        .map(userCardEntity -> userCardMapper.toUserCardDto(userCardEntity))
+                        .collect(Collectors.toList())))
                 .build();
     }
 }

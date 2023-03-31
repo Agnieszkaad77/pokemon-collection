@@ -1,11 +1,12 @@
 package com.pokemon.service;
 
-import com.pokemon.dto.CardDto;
-import com.pokemon.entity.CardEntity;
+import com.pokemon.dto.CardDataDto;
+import com.pokemon.entity.CardDataEntity;
 import com.pokemon.entity.UserEntity;
 import com.pokemon.exception.BoosterException;
-import com.pokemon.mapper.CardMapper;
+import com.pokemon.mapper.CardDataMapper;
 import com.pokemon.repository.CardRepository;
+import com.pokemon.repository.UserCardRepository;
 import com.pokemon.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,17 +25,19 @@ public class BoosterService {
     private CardRepository cardRepository;
     private LoginService loginService;
     private UserRepository userRepository;
-    private CardMapper cardMapper;
+    private CardDataMapper cardDataMapper;
+    private UserCardRepository userCardRepository;
 
-    public List<CardDto> buyBooster() {
+    public List<CardDataDto> buyBooster() {
         if (!verifyBalance()) {
             throw new BoosterException("You have not enough Poke Coins!");
         }
-        List<CardEntity> randomCards = prepareBooster();
+        List<CardDataEntity> randomCards = prepareBooster();
+
         processPurchase(randomCards);
 
         return randomCards.stream()
-                .map(cardEntity -> cardMapper.toCardDto(cardEntity))
+                .map(cardEntity -> cardDataMapper.toCardDto(cardEntity))
                 .toList();
     }
 
@@ -42,12 +45,12 @@ public class BoosterService {
         return loginService.getLoggedUserDto().getPokeCoins() >= PRICE;
     }
 
-    private List<CardEntity> prepareBooster() {
-        List<CardEntity> cards = cardRepository.findAll();
+    private List<CardDataEntity> prepareBooster() {
+        List<CardDataEntity> cards = cardRepository.findAll();
         Random random = new Random();
-        List<CardEntity> randomCards = new ArrayList<>();
+        List<CardDataEntity> randomCards = new ArrayList<>();
         for (int i = 0; i < BOOSTER_SIZE; i++) {
-            CardEntity card = cards.get(random.nextInt(cards.size()));
+            CardDataEntity card = cards.get(random.nextInt(cards.size()));
             if (randomCards.contains(card)) {
                 i--;
             } else {
@@ -57,10 +60,11 @@ public class BoosterService {
         return randomCards;
     }
 
-    private void processPurchase(List<CardEntity> randomCards) {
+    private void processPurchase(List<CardDataEntity> randomCards) {
         UserEntity loggedUser = loginService.getLoggedUserEntity();
         loggedUser.decreasePokeCoins(PRICE);
         loggedUser.addCards(randomCards);
+        userCardRepository.saveAll(loggedUser.getCards());
         userRepository.save(loggedUser);
     }
 }

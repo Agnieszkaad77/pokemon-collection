@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class AuctionDto {
 
-    private String cardId;
+    private long userCardId;
     private int price;
     private int amount;
 

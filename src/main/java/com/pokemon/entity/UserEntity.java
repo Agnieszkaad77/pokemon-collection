@@ -27,7 +27,7 @@ public class UserEntity {
     private int points;
     @Builder.Default
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<CardEntity> cards = new ArrayList<>();
+    private List<UserCardEntity> cards = new ArrayList<>();
 
     public void decreasePokeCoins(int price) {
         this.pokeCoins -= price;
@@ -37,8 +37,11 @@ public class UserEntity {
         this.pokeCoins += income;
     }
 
-    public void addCards(List<CardEntity> purchasedCards) {
-        this.cards.addAll(purchasedCards);
+    public void addCards(List<CardDataEntity> purchasedCards) {
+        List<UserCardEntity> cards = purchasedCards.stream()
+                .map(UserCardEntity::new)
+                .toList();
+        this.cards.addAll(cards);
         this.points += purchasedCards.size();
     }
 }
