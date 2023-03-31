@@ -20,13 +20,17 @@ public class UserCardEntity {
     @ManyToOne
     private CardDataEntity cardDataEntity;
 
+    @ManyToOne
+    private UserEntity userEntity;
+
 
     protected UserCardEntity() {
 
     }
 
-    public UserCardEntity(CardDataEntity cardDataEntity) {
+    public UserCardEntity(CardDataEntity cardDataEntity, UserEntity userEntity) {
         this.cardDataEntity = cardDataEntity;
+        this.userEntity = userEntity;
     }
 
     public int getAmountNotInAuctions() {

@@ -32,10 +32,10 @@ public class BoosterController {
 
     @PostMapping("/buy-booster")
     public String processBuyBooster(Model model) {
+        addPokeCoinsAttribute(model);
         try {
             List<CardDataDto> cards = boosterService.buyBooster();
             model.addAttribute("cards", cards);
-            addPokeCoinsAttribute(model);
         } catch (BoosterException e) {
             model.addAttribute("noPokeCoinsMessage", e.getMessage());
             return "booster";

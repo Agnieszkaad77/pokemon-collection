@@ -26,7 +26,7 @@ public class UserEntity {
     private int pokeCoins = 20;
     private int points;
     @Builder.Default
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     private List<UserCardEntity> cards = new ArrayList<>();
 
     public void decreasePokeCoins(int price) {
@@ -39,7 +39,7 @@ public class UserEntity {
 
     public void addCards(List<CardDataEntity> purchasedCards) {
         List<UserCardEntity> cards = purchasedCards.stream()
-                .map(UserCardEntity::new)
+                .map(cardDataEntity -> new UserCardEntity(cardDataEntity, this))
                 .toList();
         this.cards.addAll(cards);
         this.points += purchasedCards.size();
