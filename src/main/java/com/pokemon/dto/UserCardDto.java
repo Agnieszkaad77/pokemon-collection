@@ -7,9 +7,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class CardDto {
+public class UserCardDto {
 
-    private String id;
+    private long id;
+
+    private int ownedAmount;
+    private int amountInAuctions;
+    private String cardDataId;
     private String name;
     private String largeImage;
 

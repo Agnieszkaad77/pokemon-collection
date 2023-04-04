@@ -1,5 +1,5 @@
 package com.pokemon.controller;
-import com.pokemon.dto.CardDto;
+import com.pokemon.dto.CardDataDto;
 import com.pokemon.dto.UserDto;
 import com.pokemon.exception.BoosterException;
 import com.pokemon.exception.LoginException;
@@ -23,8 +23,6 @@ public class BoosterController {
     @GetMapping("/buy-booster")
     public String getBuyBoosterPage(Model model) {
         try {
-            UserDto userDto = loginService.getLoggedUserDto();
-            model.addAttribute("loggedUser", userDto);
             addPokeCoinsAttribute(model);
         } catch (LoginException e) {
             return "redirect:/login";
@@ -34,10 +32,10 @@ public class BoosterController {
 
     @PostMapping("/buy-booster")
     public String processBuyBooster(Model model) {
+        addPokeCoinsAttribute(model);
         try {
-            List<CardDto> cards = boosterService.buyBooster();
+            List<CardDataDto> cards = boosterService.buyBooster();
             model.addAttribute("cards", cards);
-            addPokeCoinsAttribute(model);
         } catch (BoosterException e) {
             model.addAttribute("noPokeCoinsMessage", e.getMessage());
             return "booster";

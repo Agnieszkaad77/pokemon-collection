@@ -15,6 +15,6 @@ public class UserDto {
     private String email;
     private int pokeCoins;
     private int points;
-    private List<CardDto> cards;
+    private List<UserCardDto> cards;
 
 }

@@ -2,6 +2,7 @@ package com.pokemon.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -15,7 +16,10 @@ import lombok.*;
 public class AuctionEntity {
 
     @Id
-    private String cardId;
+    private long id;
+
+    @ManyToOne
+    private UserCardEntity userCardEntity;
 
     private int price;
     private int amount;
