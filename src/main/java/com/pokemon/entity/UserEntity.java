@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -37,11 +39,23 @@ public class UserEntity {
         this.pokeCoins += income;
     }
 
-    public void addCards(List<CardDataEntity> purchasedCards) {
-        List<UserCardEntity> cards = purchasedCards.stream()
-                .map(cardDataEntity -> new UserCardEntity(cardDataEntity, this))
-                .toList();
-        this.cards.addAll(cards);
-        this.points += purchasedCards.size();
+    public void addCards(Set<CardDataEntity> purchasedCards) {
+        List<UserCardEntity> newUserCards = new ArrayList<>();
+        for (CardDataEntity purchasedCard : purchasedCards) {
+            Optional<UserCardEntity> userCardOptional = findUserCard(purchasedCard);
+            if (userCardOptional.isEmpty()) {
+                newUserCards.add(new UserCardEntity(purchasedCard, this));
+            } else {
+                userCardOptional.get().increaseOwnedAmount(1);
+            }
+            this.cards.addAll(newUserCards);
+            this.points += purchasedCards.size();
+        }
+    }
+
+    private Optional<UserCardEntity> findUserCard(CardDataEntity cardDataEntity) {
+        return cards.stream()
+                .filter(userCard -> userCard.getCardDataEntity().equals(cardDataEntity))
+                .findFirst();
     }
 }

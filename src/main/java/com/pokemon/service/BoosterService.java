@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -41,10 +42,15 @@ public class BoosterService {
                 .toList();
     }
 
+
     private boolean verifyBalance() {
         return loginService.getLoggedUserDto().getPokeCoins() >= PRICE;
     }
 
+    /**
+     * Creates {@link BoosterService#BOOSTER_SIZE} number of UNIQUE {@link CardDataEntity}s. This method pick random
+     * cards from all cards in {@link CardRepository}.
+    * */
     private List<CardDataEntity> prepareBooster() {
         List<CardDataEntity> cards = cardRepository.findAll();
         Random random = new Random();
@@ -63,7 +69,7 @@ public class BoosterService {
     private void processPurchase(List<CardDataEntity> randomCards) {
         UserEntity loggedUser = loginService.getLoggedUserEntity();
         loggedUser.decreasePokeCoins(PRICE);
-        loggedUser.addCards(randomCards);
+        loggedUser.addCards(new HashSet<>(randomCards));
         userCardRepository.saveAll(loggedUser.getCards());
         userRepository.save(loggedUser);
     }

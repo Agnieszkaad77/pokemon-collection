@@ -40,4 +40,8 @@ public class UserCardEntity {
     public void increaseAmountInAuctions(int amount) {
         amountInAuctions += amount;
     }
+
+    public void increaseOwnedAmount(int amount) {
+        ownedAmount += amount;
+    }
 }
