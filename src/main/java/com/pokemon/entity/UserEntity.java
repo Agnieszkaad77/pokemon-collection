@@ -3,10 +3,7 @@ package com.pokemon.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -48,14 +45,27 @@ public class UserEntity {
             } else {
                 userCardOptional.get().increaseOwnedAmount(1);
             }
-            this.cards.addAll(newUserCards);
-            this.points += purchasedCards.size();
         }
+        this.cards.addAll(newUserCards);
+        this.points += purchasedCards.size();
     }
 
     private Optional<UserCardEntity> findUserCard(CardDataEntity cardDataEntity) {
         return cards.stream()
                 .filter(userCard -> userCard.getCardDataEntity().equals(cardDataEntity))
                 .findFirst();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

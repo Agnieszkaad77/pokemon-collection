@@ -34,16 +34,19 @@ public class LoginService {
     }
 
     public UserDto getLoggedUserDto() {
-        if (sessionDto.getUser() == null) {
+        UserEntity userEntity = sessionDto.getUser();
+        if (userEntity == null) {
             throw new LoginException("User is not logged!");
         }
-        return userMapper.toUserDto(sessionDto.getUser());
+        UserDto userDto = userMapper.toUserDto(userEntity);
+        return userDto;
     }
 
     UserEntity getLoggedUserEntity() {
-        if (sessionDto.getUser() == null) {
+        UserEntity user = sessionDto.getUser();
+        if (user == null) {
             throw new LoginException("User is not logged!");
         }
-        return sessionDto.getUser();
+        return user;
     }
 }
