@@ -6,12 +6,14 @@ import lombok.*;
 import java.util.*;
 
 @Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 @Builder
 @AllArgsConstructor
+@EqualsAndHashCode
 public class UserEntity {
 
     @Id
@@ -54,18 +56,5 @@ public class UserEntity {
         return cards.stream()
                 .filter(userCard -> userCard.getCardDataEntity().equals(cardDataEntity))
                 .findFirst();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
