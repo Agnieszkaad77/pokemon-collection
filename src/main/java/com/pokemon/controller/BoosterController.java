@@ -1,6 +1,5 @@
 package com.pokemon.controller;
 import com.pokemon.dto.CardDataDto;
-import com.pokemon.dto.UserDto;
 import com.pokemon.exception.BoosterException;
 import com.pokemon.exception.LoginException;
 import com.pokemon.service.BoosterService;
@@ -32,7 +31,6 @@ public class BoosterController {
 
     @PostMapping("/buy-booster")
     public String processBuyBooster(Model model) {
-        addPokeCoinsAttribute(model);
         try {
             List<CardDataDto> cards = boosterService.buyBooster();
             model.addAttribute("cards", cards);
@@ -40,6 +38,7 @@ public class BoosterController {
             model.addAttribute("noPokeCoinsMessage", e.getMessage());
             return "booster";
         }
+        addPokeCoinsAttribute(model);
         return "booster";
     }
 

@@ -9,7 +9,7 @@
 <h2>My cards collection:</h2>
 <h3 th:text="${auctionMessage}"></h3>
 
-<div th:each="card:${loggedUser.cards}">
+<div th:each="card:${pageData.cards}">
     <div th:text="${card.name}"></div>
     <img width="100" height="150" th:src="${card.largeImage}">
 
@@ -18,7 +18,7 @@
         <input type="number" id="price" th:field="${auction.price}">
         <label for="card-amount">Amount:</label>
         <input type="number" id="card-amount" th:field="${auction.amount}">
-        <input type="hidden" th:value="${card.id}" name="cardId">
+        <input type="hidden" th:value="${card.id}" name="userCardId">
         <input type="submit" value="Sell">
     </form>
 </div>
