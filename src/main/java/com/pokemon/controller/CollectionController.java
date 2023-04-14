@@ -24,7 +24,7 @@ public class CollectionController {
     public String getCollectionPage(Model model) {
         try {
             UserDto userDto = loginService.getLoggedUserDto();
-            model.addAttribute("loggedUser", userDto);
+            model.addAttribute("pageData", userDto);
             AuctionDto auctionDto = new AuctionDto();
             model.addAttribute("auction", auctionDto);
         } catch (LoginException e) {

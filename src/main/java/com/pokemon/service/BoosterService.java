@@ -8,7 +8,6 @@ import com.pokemon.mapper.CardDataMapper;
 import com.pokemon.repository.CardRepository;
 import com.pokemon.repository.UserCardRepository;
 import com.pokemon.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,6 @@ public class BoosterService {
     private CardDataMapper cardDataMapper;
     private UserCardRepository userCardRepository;
 
-    @Transactional
     public List<CardDataDto> buyBooster() {
         if (!verifyBalance()) {
             throw new BoosterException("You have not enough Poke Coins!");

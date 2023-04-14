@@ -37,6 +37,7 @@ public class UserMapper {
                 .pokeCoins(userEntity.getPokeCoins())
                 .points(userEntity.getPoints())
                 .cards((userEntity.getCards().stream()
+                        .filter(userCardEntity -> userCardEntity.isVisibleInCollection())
                         .map(userCardEntity -> userCardMapper.toUserCardDto(userCardEntity))
                         .collect(Collectors.toList())))
                 .build();

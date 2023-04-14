@@ -44,4 +44,8 @@ public class UserCardEntity {
     public void increaseOwnedAmount(int amount) {
         ownedAmount += amount;
     }
+
+    public boolean isVisibleInCollection() {
+        return ownedAmount > amountInAuctions;
+    }
 }
