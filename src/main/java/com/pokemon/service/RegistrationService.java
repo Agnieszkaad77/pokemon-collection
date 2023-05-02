@@ -26,6 +26,12 @@ public class RegistrationService {
                 .password("pass")
                 .agree(true)
                 .build());
+
+        userRepository.save(UserEntity.builder()
+                .email("kasia@op.pl")
+                .password("kasia")
+                .agree(true)
+                .build());
     }
 
     public void register(UserRegistrationDto userRegistrationDto) {

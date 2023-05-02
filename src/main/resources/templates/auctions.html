@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<h3 th:text="${noAuctionMessage}"></h3>
+
 <div th:each="auction:${auctions}">
     <div th:text="${auction.name}"></div>
     <img width="100" height="150" th:src="${auction.largeImage}">

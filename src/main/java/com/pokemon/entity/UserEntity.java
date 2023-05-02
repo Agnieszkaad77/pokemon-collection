@@ -27,7 +27,7 @@ public class UserEntity {
     private int pokeCoins = 20;
     private int points;
     @Builder.Default
-    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UserCardEntity> cards = new ArrayList<>();
 
     public void decreasePokeCoins(int price) {
@@ -48,10 +48,24 @@ public class UserEntity {
     public void addCards(CardDataEntity cardDataEntity, int amount) {
         Optional<UserCardEntity> userCardOptional = findUserCard(cardDataEntity);
         if (userCardOptional.isEmpty()) {
-            cards.add(new UserCardEntity(cardDataEntity, this,amount));
+            cards.add(new UserCardEntity(cardDataEntity, this, amount));
         } else {
             userCardOptional.get().increaseOwnedAmount(amount);
         }
+    }
+
+    public Optional<UserCardEntity> removeCards(CardDataEntity cardDataEntity, int amount) { //possibly references from second side of relation must be deleted
+        Optional<UserCardEntity> userCardOptional = findUserCard(cardDataEntity);
+        if (userCardOptional.isEmpty()) {
+            return userCardOptional;
+        }
+        UserCardEntity userCardEntity = userCardOptional.get();
+        userCardEntity.decreaseAmount(amount);
+        if (userCardEntity.getOwnedAmount() == 0) {
+            cards.remove(userCardEntity);
+            userCardEntity.setUserEntity(null);
+        }
+        return userCardOptional;
     }
 
     private Optional<UserCardEntity> findUserCard(CardDataEntity cardDataEntity) {

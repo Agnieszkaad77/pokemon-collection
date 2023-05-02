@@ -26,4 +26,7 @@ public class AuctionEntity {
     private int price;
     private int amount;
 
+    public void setUserCardEntity(UserCardEntity userCardEntity) {
+        this.userCardEntity = userCardEntity;
+    }
 }

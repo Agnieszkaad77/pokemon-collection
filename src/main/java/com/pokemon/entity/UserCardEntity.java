@@ -46,7 +46,16 @@ public class UserCardEntity {
         ownedAmount += amount;
     }
 
+    public void decreaseAmount(int amount) {
+        ownedAmount -= amount;
+        amountInAuctions -= amount;
+    }
+
     public boolean isVisibleInCollection() {
         return ownedAmount > amountInAuctions;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }
