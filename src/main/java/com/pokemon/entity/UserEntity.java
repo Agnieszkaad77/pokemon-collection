@@ -39,17 +39,19 @@ public class UserEntity {
     }
 
     public void addCards(Set<CardDataEntity> purchasedCards) {
-        List<UserCardEntity> newUserCards = new ArrayList<>();
         for (CardDataEntity purchasedCard : purchasedCards) {
-            Optional<UserCardEntity> userCardOptional = findUserCard(purchasedCard);
-            if (userCardOptional.isEmpty()) {
-                newUserCards.add(new UserCardEntity(purchasedCard, this));
-            } else {
-                userCardOptional.get().increaseOwnedAmount(1);
-            }
+            addCards(purchasedCard, 1);
         }
-        this.cards.addAll(newUserCards);
         this.points += purchasedCards.size();
+    }
+
+    public void addCards(CardDataEntity cardDataEntity, int amount) {
+        Optional<UserCardEntity> userCardOptional = findUserCard(cardDataEntity);
+        if (userCardOptional.isEmpty()) {
+            cards.add(new UserCardEntity(cardDataEntity, this,amount));
+        } else {
+            userCardOptional.get().increaseOwnedAmount(amount);
+        }
     }
 
     private Optional<UserCardEntity> findUserCard(CardDataEntity cardDataEntity) {

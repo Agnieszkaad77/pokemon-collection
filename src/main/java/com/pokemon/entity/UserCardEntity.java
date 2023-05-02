@@ -14,7 +14,7 @@ public class UserCardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int ownedAmount = 1;
+    private int ownedAmount = 0;
     private int amountInAuctions = 0;
 
     @ManyToOne
@@ -28,9 +28,10 @@ public class UserCardEntity {
 
     }
 
-    public UserCardEntity(CardDataEntity cardDataEntity, UserEntity userEntity) {
+    public UserCardEntity(CardDataEntity cardDataEntity, UserEntity userEntity,int ownedAmount) {
         this.cardDataEntity = cardDataEntity;
         this.userEntity = userEntity;
+        this.ownedAmount = ownedAmount;
     }
 
     public int getAmountNotInAuctions() {

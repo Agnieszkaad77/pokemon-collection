@@ -9,8 +9,14 @@ import lombok.*;
 @AllArgsConstructor
 public class AuctionDto {
 
+    private long id;
+
     private long userCardId;
     private int price;
     private int amount;
+
+    //for auctions view scenario
+    private String name;
+    private String largeImage;
 
 }

@@ -33,7 +33,7 @@ public class CollectionController {
         return "collection";
     }
 
-    @PostMapping("/collection/sell")
+    @PostMapping("/collection")
     public String createAuction(AuctionDto auctionDto, RedirectAttributes redirectAttributes) {
         try {
             auctionService.saveAuction(auctionDto);

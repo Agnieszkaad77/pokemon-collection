@@ -19,6 +19,10 @@ public class AuctionEntity {
     @ManyToOne
     private UserCardEntity userCardEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
     private int price;
     private int amount;
 
