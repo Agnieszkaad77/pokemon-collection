@@ -33,6 +33,7 @@ public class AuctionMapper {
                 .amount(auctionEntity.getAmount())
                 .name(auctionEntity.getUserCardEntity().getCardDataEntity().getName())
                 .largeImage(auctionEntity.getUserCardEntity().getCardDataEntity().getLargeImage())
+                .yours(loginService.getLoggedUserEntity().equals(auctionEntity.getUserEntity()))
                 .build();
     }
 }

@@ -18,4 +18,5 @@ public class AuctionDto {
     //for auctions view scenario
     private String name;
     private String largeImage;
+    private boolean yours;
 }
