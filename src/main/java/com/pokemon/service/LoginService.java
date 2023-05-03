@@ -39,7 +39,7 @@ public class LoginService {
         return userDto;
     }
 
-    UserEntity getLoggedUserEntity() {
+    public UserEntity getLoggedUserEntity() {
         UserEntity user = sessionDto.getUserOrThrow();
         return user;
     }

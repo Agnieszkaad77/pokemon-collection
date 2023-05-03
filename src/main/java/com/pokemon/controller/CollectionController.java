@@ -33,13 +33,12 @@ public class CollectionController {
         return "collection";
     }
 
-    @PostMapping("/collection/sell")
+    @PostMapping("/collection")
     public String createAuction(AuctionDto auctionDto, RedirectAttributes redirectAttributes) {
         try {
             auctionService.saveAuction(auctionDto);
         } catch (AuctionException e) {
             redirectAttributes.addFlashAttribute("auctionMessage", e.getMessage());
-            return "redirect:/collection";
         }
         return "redirect:/collection";
     }

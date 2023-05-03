@@ -13,9 +13,9 @@
     <div th:text="${card.name}"></div>
     <img width="100" height="150" th:src="${card.largeImage}">
 
-    <form action="/collection/sell" method="post">
-        <label for="price">Price:</label>
-        <input type="number" id="price" th:field="${auction.price}">
+    <form action="/collection" method="post">
+        <label for="fullPrice">Price:</label>
+        <input type="number" id="fullPrice" th:field="${auction.fullPrice}">
         <label for="card-amount">Amount:</label>
         <input type="number" id="card-amount" th:field="${auction.amount}">
         <input type="hidden" th:value="${card.id}" name="userCardId">
