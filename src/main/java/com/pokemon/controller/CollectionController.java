@@ -39,7 +39,6 @@ public class CollectionController {
             auctionService.saveAuction(auctionDto);
         } catch (AuctionException e) {
             redirectAttributes.addFlashAttribute("auctionMessage", e.getMessage());
-            return "redirect:/collection";
         }
         return "redirect:/collection";
     }

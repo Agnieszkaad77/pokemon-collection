@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h3 th:text="${noAuctionMessage}"></h3>
+<h3 th:text="${exceptionMessage}"></h3>
 
 <div th:each="auction:${auctions}">
     <div th:text="${auction.name}"></div>
@@ -14,7 +14,7 @@
 
     <form action="/auctions" method="post">
         <input type="hidden" th:value="${auction.id}" name="id">
-        <input type="submit" value="Purchase">
+        <input type="submit" th:value="Purchase">
     </form>
 </div>
 </body>

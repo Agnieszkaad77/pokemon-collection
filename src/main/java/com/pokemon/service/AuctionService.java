@@ -9,6 +9,7 @@ import com.pokemon.mapper.AuctionMapper;
 import com.pokemon.repository.AuctionRepository;
 import com.pokemon.repository.UserCardRepository;
 import com.pokemon.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +54,7 @@ public class AuctionService {
     }
 
     private boolean checkPriceCorrectness(AuctionDto auctionDto) {
-        return auctionDto.getPrice() >= 0;
+        return auctionDto.getFullPrice() >= 0;
     }
 
     public List<AuctionDto> getAllAuctions() {
@@ -62,15 +63,25 @@ public class AuctionService {
                 .toList();
     }
 
+    /**
+     * While purchasing auction user always buys all cards and then the auction is always closed.
+     * @param id Auction's id.
+     */
+    @Transactional
     public void purchaseAuction(long id) {
         AuctionEntity auctionEntity = auctionRepository.findById(id)
                 .orElseThrow(() -> new AuctionException("Auction does not exist!"));
         UserEntity buyer = loginService.getLoggedUserEntity();
+        if (buyer.getPokeCoins() < auctionEntity.getFullPrice()) {
+            throw new AuctionException("Not enough PokeCoins!");
+        }
         UserEntity seller = auctionEntity.getUserEntity();
         buyer.addCards(auctionEntity.getUserCardEntity().getCardDataEntity(), auctionEntity.getAmount());
         // possibly in both cases only UserCardEntity can be passed.
         Optional<UserCardEntity> userCardEntityRemoved =
                 seller.removeCards(auctionEntity.getUserCardEntity().getCardDataEntity(), auctionEntity.getAmount());
+        buyer.decreasePokeCoins(auctionEntity.getFullPrice());
+        seller.increasePokeCoins(auctionEntity.getFullPrice());
         userRepository.save(buyer);
         userRepository.save(seller);
         auctionRepository.delete(auctionEntity);

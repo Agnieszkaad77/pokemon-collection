@@ -19,7 +19,7 @@ public class AuctionMapper {
         return AuctionEntity.builder()
                 .userCardEntity(userCardRepository.findById(auctionDto.getUserCardId())
                         .orElseThrow(() -> new AuctionException("No card found!")))
-                .price(auctionDto.getPrice())
+                .fullPrice(auctionDto.getFullPrice())
                 .amount(auctionDto.getAmount())
                 .userEntity(loginService.getLoggedUserEntity())
                 .build();
@@ -29,7 +29,7 @@ public class AuctionMapper {
         return AuctionDto.builder()
                 .id(auctionEntity.getId())
                 .userCardId(auctionEntity.getUserCardEntity().getId())
-                .price(auctionEntity.getPrice())
+                .fullPrice(auctionEntity.getFullPrice())
                 .amount(auctionEntity.getAmount())
                 .name(auctionEntity.getUserCardEntity().getCardDataEntity().getName())
                 .largeImage(auctionEntity.getUserCardEntity().getCardDataEntity().getLargeImage())

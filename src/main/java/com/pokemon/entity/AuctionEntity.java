@@ -16,6 +16,7 @@ public class AuctionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    //TODO: refactor - set appropriate names for SQL
     @ManyToOne
     private UserCardEntity userCardEntity;
 
@@ -23,10 +24,10 @@ public class AuctionEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    private int price;
+    /**
+     * This field stands for the whole auction price. It is not related to amount of cards in auction.
+     */
+    @Column(name = "full_price")
+    private int fullPrice;
     private int amount;
-
-    public void setUserCardEntity(UserCardEntity userCardEntity) {
-        this.userCardEntity = userCardEntity;
-    }
 }

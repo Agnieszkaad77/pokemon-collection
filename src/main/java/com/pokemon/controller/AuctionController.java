@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -22,15 +23,13 @@ public class AuctionController {
     }
 
     @PostMapping("/auctions")
-    public String processPurchase(long id, Model model) {
+    public String processPurchase(long id, RedirectAttributes redirectAttributes) {
         System.out.println("ID:" + id);
         try {
             auctionService.purchaseAuction(id);
         } catch (AuctionException e) {
-            model.addAttribute("noAuctionMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("exceptionMessage", e.getMessage());
         }
-        model.addAttribute("auctions", auctionService.getAllAuctions());
-        // redirect should be considered here
-        return "auctions";
+        return "redirect:/auctions";
     }
 }
