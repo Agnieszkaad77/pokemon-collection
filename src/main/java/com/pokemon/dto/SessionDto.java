@@ -6,12 +6,14 @@ import com.pokemon.exception.LoginException;
 import com.pokemon.repository.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class SessionDto {
 
     private Long userEntityId;
     private LocalDateTime loginDate;
     private UserRepository userRepository;
+    private static String MESSAGE = "User is not logged!";
 
     public SessionDto(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -23,6 +25,17 @@ public class SessionDto {
     }
 
     public UserEntity getUserOrThrow() {
-        return userRepository.findById(userEntityId).orElseThrow(() -> new LoginException("User is not logged!"));
+        if (userEntityId == null) {
+            throw new LoginException(MESSAGE);
+        }
+        return userRepository.findById(userEntityId)
+                .orElseThrow(() -> new LoginException(MESSAGE));
+    }
+
+    public Optional<UserEntity> getUser() {
+        if (userEntityId == null) {
+            return Optional.empty();
+        }
+        return userRepository.findById(userEntityId);
     }
 }
