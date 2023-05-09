@@ -35,10 +35,19 @@ public class LoginService {
         sessionDto.login(userEntity);
     }
 
-    public UserDto getLoggedUserDto() {
+    public UserDto getLoggedUserDtoOrThrow() {
         UserEntity userEntity = sessionDto.getUserOrThrow();
         UserDto userDto = userMapper.toUserDto(userEntity);
         return userDto;
+    }
+
+    public Optional<UserDto> getLoggedUserDto() {
+        Optional<UserEntity> userEntityOptional = sessionDto.getUser();
+        if (userEntityOptional.isPresent()) {
+            UserDto userDto = userMapper.toUserDto(userEntityOptional.get());
+            return Optional.of(userDto);
+        }
+        return Optional.empty();
     }
 
     public UserEntity getLoggedUserEntity() {

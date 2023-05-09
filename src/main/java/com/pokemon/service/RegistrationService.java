@@ -1,5 +1,6 @@
 package com.pokemon.service;
 
+import com.pokemon.dto.UserDto;
 import com.pokemon.dto.UserRegistrationDto;
 import com.pokemon.entity.UserEntity;
 import com.pokemon.exception.RegistrationException;
@@ -21,17 +22,21 @@ public class RegistrationService {
         if (userRepository.count() > 0) {
             return;
         }
-        userRepository.save(UserEntity.builder()
+        register(UserRegistrationDto.builder()
                 .email("jan.kowalski@gmail.com")
                 .password("pass")
+                .passwordRepeated("pass")
                 .agree(true)
-                .build());
+                .build()
+        );
 
-        userRepository.save(UserEntity.builder()
+        register(UserRegistrationDto.builder()
                 .email("kasia@op.pl")
-                .password("kasia")
+                .password("pass")
                 .agree(true)
-                .build());
+                .passwordRepeated("pass")
+                .build()
+        );
     }
 
     public void register(UserRegistrationDto userRegistrationDto) {

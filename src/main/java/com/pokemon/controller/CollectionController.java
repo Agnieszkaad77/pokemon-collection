@@ -23,7 +23,7 @@ public class CollectionController {
     @GetMapping("/collection")
     public String getCollectionPage(Model model) {
         try {
-            UserDto userDto = loginService.getLoggedUserDto();
+            UserDto userDto = loginService.getLoggedUserDtoOrThrow();
             model.addAttribute("pageData", userDto);
             AuctionDto auctionDto = new AuctionDto();
             model.addAttribute("auction", auctionDto);

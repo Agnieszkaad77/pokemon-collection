@@ -43,6 +43,6 @@ public class BoosterController {
     }
 
     private void addPokeCoinsAttribute(Model model) {
-        model.addAttribute("pokeCoins", loginService.getLoggedUserDto().getPokeCoins());
+        model.addAttribute("pokeCoins", loginService.getLoggedUserDtoOrThrow().getPokeCoins());
     }
 }
