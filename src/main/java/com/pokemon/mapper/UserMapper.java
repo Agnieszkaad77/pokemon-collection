@@ -1,12 +1,15 @@
 package com.pokemon.mapper;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.pokemon.dto.UserDto;
 import com.pokemon.dto.UserLoginDto;
 import com.pokemon.dto.UserRegistrationDto;
 import com.pokemon.entity.UserEntity;
+import com.pokemon.security.MyPasswordEncoder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.stream.Collectors;
 
 @Component
@@ -14,6 +17,7 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     private UserCardMapper userCardMapper;
+    private MyPasswordEncoder myPasswordEncoder;
 
     public UserLoginDto toUserLoginDto(UserEntity userEntity) {
         return UserLoginDto.builder()
@@ -25,7 +29,7 @@ public class UserMapper {
     public UserEntity toUserEntity(UserRegistrationDto userRegistrationDto) {
         return UserEntity.builder()
                 .email(userRegistrationDto.getEmail())
-                .password(userRegistrationDto.getPassword())
+                .password(myPasswordEncoder.encodePassword(userRegistrationDto.getPassword()))
                 .agree(userRegistrationDto.isAgree())
                 .build();
     }

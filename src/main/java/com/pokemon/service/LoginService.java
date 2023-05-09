@@ -7,6 +7,7 @@ import com.pokemon.entity.UserEntity;
 import com.pokemon.exception.LoginException;
 import com.pokemon.mapper.UserMapper;
 import com.pokemon.repository.UserRepository;
+import com.pokemon.security.MyPasswordEncoder;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,14 @@ public class LoginService {
     private SessionDto sessionDto;
     private UserRepository userRepository;
     private UserMapper userMapper;
-
+    private MyPasswordEncoder myPasswordEncoder;
 
     public void login(UserLoginDto userLoginDto) {
         Optional<UserEntity> userOptional = userRepository.findByEmail(userLoginDto.getEmail());
         UserEntity userEntity = userOptional.orElseThrow(
                 () -> new LoginException("Password or email is not correct"));
-        if (!userEntity.getPassword().equals(userLoginDto.getPassword())) {
+        boolean verified = myPasswordEncoder.verifyPassword(userLoginDto.getPassword(), userEntity.getPassword());
+        if (!verified) {
             throw new LoginException("Password or email is not correct");
         }
         sessionDto.login(userEntity);

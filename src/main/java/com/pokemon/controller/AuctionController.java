@@ -24,7 +24,6 @@ public class AuctionController {
 
     @PostMapping("/auctions")
     public String processPurchase(long id, RedirectAttributes redirectAttributes) {
-        System.out.println("ID:" + id);
         try {
             auctionService.purchaseAuction(id);
         } catch (AuctionException e) {
