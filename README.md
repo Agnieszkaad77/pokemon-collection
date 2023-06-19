@@ -16,7 +16,7 @@ User can buy a pack of five random cards. One pack, which is called as a "booste
 ### Collection
 User can view his cards by clicking on the "My collection" button.
 ### Auctions
-User can put individual cards for sale. To do so, he should display the "My Collection" tab. Under each card, there is an option to select the number of cards to sell and enter its price. After clicking the "Sell" button, an auction with a particular card will be created. Thanks to this, other users will be able to buy a single card without having to purchase the whole pack. [Note: Auctions tab still in preparation].
+User can put individual cards for sale. To do so, he should display the "My Collection" tab. Under each card, there is an option to select the number of cards to sell and enter its price. After clicking the "Sell" button, an auction with a particular card will be created. Thanks to this, other users will be able to buy a single card without having to purchase the whole pack.
 ### Ranking
 The "Ranking" tab shows the top 5 users with the largest number of cards who agreed to share data during registration. It is not necessary to be logged in to see the ranking.
 
@@ -30,6 +30,5 @@ The "Ranking" tab shows the top 5 users with the largest number of cards who agr
 
 ## Todo
 The application is constantly being developed. Features to be prepared:
-* Auctions tab
 * Profiles
-* Frontend
+* CSS
