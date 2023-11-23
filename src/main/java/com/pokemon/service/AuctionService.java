@@ -77,7 +77,6 @@ public class AuctionService {
         }
         UserEntity seller = auctionEntity.getUserEntity();
         buyer.addCards(auctionEntity.getUserCardEntity().getCardDataEntity(), auctionEntity.getAmount());
-        // possibly in both cases only UserCardEntity can be passed.
         Optional<UserCardEntity> userCardEntityRemoved =
                 seller.removeCards(auctionEntity.getUserCardEntity().getCardDataEntity(), auctionEntity.getAmount());
         buyer.decreasePokeCoins(auctionEntity.getFullPrice());
@@ -90,6 +89,5 @@ public class AuctionService {
                 userCardRepository.delete(userCard);
             }
         });
-        //TODO: payment execution
     }
 }

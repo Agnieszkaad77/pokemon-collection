@@ -1,6 +1,7 @@
 package com.pokemon.controller;
 
 import com.pokemon.exception.AuctionException;
+import com.pokemon.exception.LoginException;
 import com.pokemon.service.AuctionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,11 @@ public class AuctionController {
 
     @GetMapping("/auctions")
     public String getAuctionsPage(Model model) {
-        model.addAttribute("auctions", auctionService.getAllAuctions());
+        try {
+            model.addAttribute("auctions", auctionService.getAllAuctions());
+        } catch (LoginException e) {
+            return "redirect:/login";
+        }
         return "auctions";
     }
 
