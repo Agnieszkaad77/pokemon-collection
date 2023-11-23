@@ -4,7 +4,6 @@ The purpose of the application is to allow users to collect and trade Pokemon ca
 ## Table of contents:
 * [Description](#description)
 * [Technologies](#technologies)
-* [Todo](#todo)
 
 ## Description
 ### Registration
@@ -27,8 +26,3 @@ The "Ranking" tab shows the top 5 users with the largest number of cards who agr
 * Lombok
 * HTML
 * Thymeleaf
-
-## Todo
-The application is constantly being developed. Features to be prepared:
-* Profiles
-* CSS
